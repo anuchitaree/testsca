@@ -27,7 +27,7 @@ namespace testsca
                 if (pdi_one_row == null) return;
                 var finshedGoods = pdi_one_row.FinishGoodsNo;
                 sdmOut.ModelName = pdi_one_row.Pcnumber;
-
+                sdmOut.SerialNo = pdi_one_row.FinishGoodsNo;
                 var finalInspection = SearchFn.Final_search_finishgoods(finshedGoods);
 
                 var finalInspection_one_row = finalInspection.FirstOrDefault();
@@ -40,7 +40,7 @@ namespace testsca
                 {
                     var pn2 = pn.Insert(10 - 4, "-");
                     final_pump_part.Text = pn2;
-                    sdmOut.PartNo= pn2;
+                    sdmOut.PartNo = pn2;
                 }
                 final_timet.Text = finalInspection_one_row.Datetime.ToString("yyyy-MM-dd");
                 final_finish.Text = finalInspection_one_row.Datetime.ToString("HH:mm:ss");
@@ -59,15 +59,20 @@ namespace testsca
 
                 var grindingOut = SearchFn.Grinding_search_cylinderserialno(finalInspection_one_row.CylinderSerialNo);
                 var grinding_one_row = grindingOut.FirstOrDefault();
-                if (grinding_one_row == null) return ;
+                if (grinding_one_row == null) return;
                 textBox6.Text = $"299090-{grinding_one_row.Model.ToString()}";
                 textBox9.Text = grinding_one_row.SerialNo;
                 textBox7.Text = grinding_one_row.DateTime.ToString("yyyy-MM-dd");
                 textBox8.Text = grinding_one_row.DateTime.ToString("HH:mm:ss");
 
 
-                string sdmstring = $"Serial No : {sdmOut.SerialNo} \n Part No : {sdmOut.PartNo} \n Part Name : {sdmOut.PartName} \n Model Name :{sdmOut.ModelName} \n Production date :{sdmOut.ProductionDate}";
-                textBox24.Text = sdmstring;
+                textBox26.Text = "SDM:Final Insp.";
+                textBox27.Text = sdmOut.SerialNo;
+                textBox28.Text = sdmOut.PartNo;
+                textBox29.Text = sdmOut.PartName;
+                textBox30.Text = sdmOut.ModelName;
+                textBox31.Text = sdmOut.ProductionDate;
+
             }
             else if (textBox1.Text.Length == 8)
             {
@@ -78,7 +83,10 @@ namespace testsca
 
         }
 
-
-
+        private void btnSwitch_Click(object sender, EventArgs e)
+        {
+            var tracefwd = new Traceforward();
+            tracefwd.Show();
+        }
     }
 }
